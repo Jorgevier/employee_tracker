@@ -132,8 +132,8 @@ async function viewEmployees() {
 async function viewEmployeesByDepartment() {
   const departments = await db.findAllDepartments();
 
-async function viewEmployeesByManager() {
-  const listOfManagers = await db.findAllPossibleManagers();
+// async function viewEmployeesByManager() {
+//   const listOfManagers = await db.findAllPossibleManagers();
 
   const departmentChoices = departments.map(({ id, name }) => ({
     // CREATE TWO PROPERTIES name AMD value FOR THIS OBJECT. THE PROPERTY name SHOULD CONTAIN THE NAME OF THE DEPARTMENT.
@@ -330,5 +330,4 @@ async function addEmployee() {
 function quit() {
   console.log("Goodbye!");
   process.exit();
-}
 }
