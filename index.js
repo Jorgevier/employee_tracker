@@ -30,28 +30,28 @@ async function loadMainPrompts() {
           value: "VIEW_EMPLOYEES_BY_DEPARTMENT"
         },
         // Bonus
-        // {
-        //   name: "View All Employees By Manager",
-        //   value: "VIEW_EMPLOYEES_BY_MANAGER"
-        // }, 
+        {
+          name: "View All Employees By Manager",
+          value: "VIEW_EMPLOYEES_BY_MANAGER"
+        }, 
         {
           name: "Add Employee",
           value: "ADD_EMPLOYEE"
         },
         // Bonus
-        // {
-        //   name: "Remove Employee",
-        //   value: "REMOVE_EMPLOYEE"
-        // },
+        {
+          name: "Remove Employee",
+          value: "REMOVE_EMPLOYEE"
+        },
         {
           name: "Update Employee Role",
           value: "UPDATE_EMPLOYEE_ROLE"
         },
         // Bonus
-        // {
-        //   name: "Update Employee Manager",
-        //   value: "UPDATE_EMPLOYEE_MANAGER"
-        // },
+        {
+          name: "Update Employee Manager",
+          value: "UPDATE_EMPLOYEE_MANAGER"
+        },
         {
           name: "View All Roles",
           value: "VIEW_ROLES"
@@ -61,10 +61,10 @@ async function loadMainPrompts() {
           value: "ADD_ROLE"
         },
         //  Bonus
-        // {
-        //   name: "Remove Role",
-        //   value: "REMOVE_ROLE"
-        // },
+        {
+          name: "Remove Role",
+          value: "REMOVE_ROLE"
+        },
         {
           name: "View All Departments",
           value: "VIEW_DEPARTMENTS"
@@ -74,10 +74,10 @@ async function loadMainPrompts() {
           value: "ADD_DEPARTMENT"
         },
         //  Bonus
-        // {
-        //   name: "Remove Department",
-        //   value: "REMOVE_DEPARTMENT"
-        // },
+        {
+          name: "Remove Department",
+          value: "REMOVE_DEPARTMENT"
+        },
         {
           name: "Quit",
           value: "QUIT"
@@ -126,6 +126,8 @@ async function viewEmployeesByDepartment() {
     // THE PROPERTY value SHOULD CONTAIN id.
     // THIS OBJECT FOR EACH MANAGER WILL RETURN TO MAP() TO CONSTRUCT AN ARRAY TO BE RETURNED AND BE STORED TO managerChoices.
     // YOUR CODE HERE
+    name: name, 
+    value: department_id
   }));
 
   const { departmentId } = await prompt([
@@ -153,7 +155,8 @@ async function updateEmployeeRole() {
     // THE PROPERTY value SHOULD CONTAIN id.
     // THIS OBJECT FOR EACH MANAGER WILL RETURN TO MAP() TO CONSTRUCT AN ARRAY TO BE RETURNED AND BE STORED TO managerChoices.
     // YOUR CODE HERE    
-
+    name: first_name + last_name,
+    value: employee_id
   }));
 
   const { employeeId } = await prompt([
@@ -169,7 +172,7 @@ async function updateEmployeeRole() {
 
   const roleChoices = roles.map(({ id, title }) => ({
     name: title,
-    value: id
+    value: roles_id
   }));
 
   const { roleId } = await prompt([
@@ -202,7 +205,7 @@ async function addRole() {
 
   const departmentChoices = departments.map(({ id, name }) => ({
     name: name,
-    value: id
+    value: department_id
   }));
 
   const role = await prompt([
@@ -270,7 +273,7 @@ async function addEmployee() {
 
   const roleChoices = roles.map(({ id, title }) => ({
     name: title,
-    value: id
+    value: role_id
   }));
 
   const { roleId } = await prompt({
@@ -287,7 +290,8 @@ async function addEmployee() {
     // THE PROPERTY value SHOULD CONTAIN id.
     // THIS OBJECT FOR EACH MANAGER WILL RETURN TO MAP() TO CONSTRUCT AN ARRAY TO BE RETURNED AND BE STORED TO managerChoices.
     // YOUR CODE HERE    
-
+    name: first_name + last_name,
+    value: manager_id
   }));
   managerChoices.unshift({ name: "None", value: null });
 
