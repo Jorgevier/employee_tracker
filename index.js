@@ -1,6 +1,7 @@
 const { prompt } = require("inquirer");
 const logo = require("asciiart-logo");
 const db = require("./db");
+const { updateEmployeeManager } = require("./db");
 require("console.table");
 
 init();
@@ -92,18 +93,28 @@ async function loadMainPrompts() {
       return viewEmployees();
     case "VIEW_EMPLOYEES_BY_DEPARTMENT":
       return viewEmployeesByDepartment();
+    case "VIEW_EMPLOYEES_BY_MANAGER":
+      return viewEmployeesByManager();
     case "ADD_EMPLOYEE":
       return addEmployee();
+    case "REMOVE_EMPLOYEE":
+      return removeEmployee();
     case "UPDATE_EMPLOYEE_ROLE":
       return updateEmployeeRole();
+    case "UPDATE_EMPLOYEE_MANAGER":
+      return updateEmployeeManager();
     case "VIEW_DEPARTMENTS":
       return viewDepartments();
     case "ADD_DEPARTMENT":
       return addDepartment();
+    case "REMOVE_DEPARTMENT":
+      return removeDepartment();
     case "VIEW_ROLES":
       return viewRoles();
     case "ADD_ROLE":
       return addRole();
+    case "REMOVE_ROLE":
+      return removeRole();
     default:
       return quit();
   }
@@ -121,13 +132,16 @@ async function viewEmployees() {
 async function viewEmployeesByDepartment() {
   const departments = await db.findAllDepartments();
 
+async function viewEmployeesByManager() {
+  const listOfManagers = await db.findAllPossibleManagers();
+
   const departmentChoices = departments.map(({ id, name }) => ({
     // CREATE TWO PROPERTIES name AMD value FOR THIS OBJECT. THE PROPERTY name SHOULD CONTAIN THE NAME OF THE DEPARTMENT.
     // THE PROPERTY value SHOULD CONTAIN id.
     // THIS OBJECT FOR EACH MANAGER WILL RETURN TO MAP() TO CONSTRUCT AN ARRAY TO BE RETURNED AND BE STORED TO managerChoices.
     // YOUR CODE HERE
     name: name, 
-    value: department_id
+    value: id
   }));
 
   const { departmentId } = await prompt([
@@ -156,7 +170,7 @@ async function updateEmployeeRole() {
     // THIS OBJECT FOR EACH MANAGER WILL RETURN TO MAP() TO CONSTRUCT AN ARRAY TO BE RETURNED AND BE STORED TO managerChoices.
     // YOUR CODE HERE    
     name: first_name + last_name,
-    value: employee_id
+    value: id
   }));
 
   const { employeeId } = await prompt([
@@ -172,7 +186,7 @@ async function updateEmployeeRole() {
 
   const roleChoices = roles.map(({ id, title }) => ({
     name: title,
-    value: roles_id
+    value: id
   }));
 
   const { roleId } = await prompt([
@@ -205,7 +219,7 @@ async function addRole() {
 
   const departmentChoices = departments.map(({ id, name }) => ({
     name: name,
-    value: department_id
+    value: id
   }));
 
   const role = await prompt([
@@ -273,7 +287,7 @@ async function addEmployee() {
 
   const roleChoices = roles.map(({ id, title }) => ({
     name: title,
-    value: role_id
+    value: id
   }));
 
   const { roleId } = await prompt({
@@ -291,7 +305,7 @@ async function addEmployee() {
     // THIS OBJECT FOR EACH MANAGER WILL RETURN TO MAP() TO CONSTRUCT AN ARRAY TO BE RETURNED AND BE STORED TO managerChoices.
     // YOUR CODE HERE    
     name: first_name + last_name,
-    value: manager_id
+    value: id
   }));
   managerChoices.unshift({ name: "None", value: null });
 
@@ -316,4 +330,5 @@ async function addEmployee() {
 function quit() {
   console.log("Goodbye!");
   process.exit();
+}
 }
